@@ -1,0 +1,9 @@
+language: go
+go_import_path: github.com/kevinburke/chroma-markdown
+
+go:
+  - 1.8.x
+  - 1.9.x
+  - master
+
+script: make test
