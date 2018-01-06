@@ -3,6 +3,7 @@ package lexers
 import (
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/danwakefield/fnmatch"
 
@@ -33,22 +34,49 @@ func Names(withAliases bool) []string {
 	return out
 }
 
-// Get a Lexer by name.
+// Get a Lexer by name, alias or file extension.
 func Get(name string) chroma.Lexer {
+	candidates := chroma.PrioritisedLexers{}
 	if lexer := Registry.byName[name]; lexer != nil {
-		return lexer
+		candidates = append(candidates, lexer)
 	}
-	return Registry.byAlias[name]
+	if lexer := Registry.byAlias[name]; lexer != nil {
+		candidates = append(candidates, lexer)
+	}
+	if lexer := Registry.byName[strings.ToLower(name)]; lexer != nil {
+		candidates = append(candidates, lexer)
+	}
+	if lexer := Registry.byAlias[strings.ToLower(name)]; lexer != nil {
+		candidates = append(candidates, lexer)
+	}
+	// Try file extension.
+	if lexer := Match("filename." + name); lexer != nil {
+		candidates = append(candidates, lexer)
+	}
+	// Try exact filename.
+	if lexer := Match(name); lexer != nil {
+		candidates = append(candidates, lexer)
+	}
+	if len(candidates) == 0 {
+		return nil
+	}
+	sort.Sort(candidates)
+	return candidates[0]
 }
 
 // MatchMimeType attempts to find a lexer for the given MIME type.
 func MatchMimeType(mimeType string) chroma.Lexer {
+	matched := chroma.PrioritisedLexers{}
 	for _, l := range Registry.Lexers {
 		for _, lmt := range l.Config().MimeTypes {
 			if mimeType == lmt {
-				return l
+				matched = append(matched, l)
 			}
 		}
+	}
+	if len(matched) != 0 {
+		sort.Sort(matched)
+		return matched[0]
 	}
 	return nil
 }
@@ -56,23 +84,33 @@ func MatchMimeType(mimeType string) chroma.Lexer {
 // Match returns the first lexer matching filename.
 func Match(filename string) chroma.Lexer {
 	filename = filepath.Base(filename)
+	matched := chroma.PrioritisedLexers{}
 	// First, try primary filename matches.
 	for _, lexer := range Registry.Lexers {
 		config := lexer.Config()
 		for _, glob := range config.Filenames {
 			if fnmatch.Match(glob, filename, 0) {
-				return lexer
+				matched = append(matched, lexer)
 			}
 		}
 	}
+	if len(matched) > 0 {
+		sort.Sort(matched)
+		return matched[0]
+	}
+	matched = nil
 	// Next, try filename aliases.
 	for _, lexer := range Registry.Lexers {
 		config := lexer.Config()
 		for _, glob := range config.AliasFilenames {
 			if fnmatch.Match(glob, filename, 0) {
-				return lexer
+				matched = append(matched, lexer)
 			}
 		}
+	}
+	if len(matched) > 0 {
+		sort.Sort(matched)
+		return matched[0]
 	}
 	return nil
 }
@@ -97,8 +135,10 @@ func Analyse(text string) chroma.Lexer {
 func Register(lexer chroma.Lexer) chroma.Lexer {
 	config := lexer.Config()
 	Registry.byName[config.Name] = lexer
+	Registry.byName[strings.ToLower(config.Name)] = lexer
 	for _, alias := range config.Aliases {
 		Registry.byAlias[alias] = lexer
+		Registry.byAlias[strings.ToLower(alias)] = lexer
 	}
 	Registry.Lexers = append(Registry.Lexers, lexer)
 	return lexer

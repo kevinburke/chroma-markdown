@@ -2,10 +2,14 @@
 
 
 [[projects]]
-  branch = "master"
   name = "github.com/alecthomas/chroma"
-  packages = [".","formatters/html","lexers","styles"]
-  revision = "03b0c0d6bb7b9f7f8fd58fca6f1c6a2caffb9ca8"
+  packages = [
+    ".",
+    "formatters/html",
+    "lexers",
+    "styles"
+  ]
+  revision = "v0.2.1"
 
 [[projects]]
   branch = "master"
@@ -15,13 +19,16 @@
 
 [[projects]]
   name = "github.com/dlclark/regexp2"
-  packages = [".","syntax"]
+  packages = [
+    ".",
+    "syntax"
+  ]
   revision = "487489b64fb796de2e55f4e8a4ad1e145f80e957"
   version = "v1.1.6"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f31184a55e50f445537c2f983f07a94468ddd049e1c6bc5c3dd81fcc0f954e14"
+  inputs-digest = "d000af53c3e4361e32b9cefa257a3a9e965a5b2a08fab400e6b4825e78da5919"
   solver-name = "gps-cdcl"
   solver-version = 1

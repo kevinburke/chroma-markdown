@@ -6,7 +6,7 @@ Chroma takes source code and other structured text and converts it into syntax
 highlighted HTML, ANSI-coloured text, etc.
 
 Chroma is based heavily on [Pygments](http://pygments.org/), and includes
-translaters for Pygments lexers and styles.
+translators for Pygments lexers and styles.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ translaters for Pygments lexers and styles.
 
 ## Supported languages
 
-ABNF, ANTLR, APL, ActionScript, ActionScript 3, Ada, Angular2, ApacheConf, AppleScript, Awk, BNF, Base Makefile, Bash, Batchfile, BlitzBasic, Brainfuck, C, C#, C++, CFEngine3, CMake, COBOL, CSS, Cap&#x27;n Proto, Ceylon, ChaiScript, Cheetah, Clojure, CoffeeScript, Common Lisp, Coq, Crystal, Cython, DTD, Dart, Diff, Django/Jinja, Docker, EBNF, Elixir, Elm, EmacsLisp, Erlang, FSharp, Factor, Fish, Forth, Fortran, GAS, GDScript, GLSL, Genshi, Genshi HTML, Genshi Text, Gnuplot, Go, Groovy, HTML, Handlebars, Haskell, Haxe, Hexdump, Hy, INI, Idris, Io, JSON, Java, JavaScript, Julia, Kotlin, LLVM, Lighttpd configuration file, Lua, Mako, Mason, Mathematica, MiniZinc, Modula-2, MySQL, Myghty, NASM, Newspeak, Nginx configuration file, Nim, OCaml, Octave, PHP, PL/pgSQL, POVRay, PacmanConf, Perl, Pig, PkgConfig, PostScript, PostgreSQL SQL dialect, PowerShell, Prolog, Protocol Buffer, Puppet, Python, Python 3, QBasic, R, Racket, Ragel, Rexx, Ruby, Rust, SPARQL, SQL, Sass, Scala, Scheme, Scilab, Smalltalk, Smarty, Snobol, SquidConf, Swift, TASM, Tcl, Tcsh, Termcap, Terminfo, Terraform, Thrift, Transact-SQL, Turtle, Twig, TypeScript, TypoScript, TypoScriptCssData, TypoScriptHtmlData, VHDL, VimL, XML, Xorg, YAML, cfstatement, markdown, reStructuredText, reg, systemverilog, verilog
+ABNF, ANTLR, APL, ActionScript, ActionScript 3, Ada, Angular2, ApacheConf, AppleScript, Awk, BNF, Base Makefile, Bash, Batchfile, BlitzBasic, Brainfuck, C, C#, C++, CFEngine3, CMake, COBOL, CSS, Cap&#x27;n Proto, Ceylon, ChaiScript, Cheetah, Clojure, CoffeeScript, Common Lisp, Coq, Crystal, Cython, DTD, Dart, Diff, Django/Jinja, Docker, EBNF, Elixir, Elm, EmacsLisp, Erlang, FSharp, Factor, Fish, Forth, Fortran, GAS, GDScript, GLSL, Genshi, Genshi HTML, Genshi Text, Gnuplot, Go, Groovy, HTML, Handlebars, Haskell, Haxe, Hexdump, Hy, INI, Idris, Io, JSON, Java, JavaScript, Julia, Kotlin, LLVM, Lighttpd configuration file, Lua, Mako, Mason, Mathematica, MiniZinc, Modula-2, MySQL, Myghty, NASM, Newspeak, Nginx configuration file, Nim, OCaml, Octave, PHP, PL/pgSQL, POVRay, PacmanConf, Perl, Pig, PkgConfig, PostScript, PostgreSQL SQL dialect, PowerShell, Prolog, Protocol Buffer, Puppet, Python, Python 3, QBasic, R, Racket, Ragel, Rexx, Ruby, Rust, SPARQL, SQL, Sass, Scala, Scheme, Scilab, Smalltalk, Smarty, Snobol, SquidConf, SVG, Swift, TASM, Tcl, Tcsh, Termcap, Terminfo, Terraform, Thrift, Transact-SQL, Turtle, Twig, TypeScript, TypoScript, TypoScriptCssData, TypoScriptHtmlData, VHDL, VimL, XML, Xorg, YAML, cfstatement, markdown, reStructuredText, reg, systemverilog, verilog
 
 _I will attempt to keep this section up to date, but an authoritative list can be
 displayed with `chroma --list`._
@@ -86,7 +86,7 @@ written in. There are three primary ways to do that:
     lexer := lexers.Analyse("package main\n\nfunc main()\n{\n}\n")
     ```
 
-In all cases, `nil` will be returned if the langauge can not be identified.
+In all cases, `nil` will be returned if the language can not be identified.
 
 ```go
 if lexer == nil {
