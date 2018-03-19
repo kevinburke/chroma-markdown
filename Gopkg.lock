@@ -7,9 +7,34 @@
     ".",
     "formatters/html",
     "lexers",
+    "lexers/a",
+    "lexers/b",
+    "lexers/c",
+    "lexers/d",
+    "lexers/e",
+    "lexers/f",
+    "lexers/g",
+    "lexers/h",
+    "lexers/i",
+    "lexers/internal",
+    "lexers/j",
+    "lexers/k",
+    "lexers/l",
+    "lexers/m",
+    "lexers/n",
+    "lexers/o",
+    "lexers/p",
+    "lexers/q",
+    "lexers/r",
+    "lexers/s",
+    "lexers/t",
+    "lexers/v",
+    "lexers/w",
+    "lexers/x",
+    "lexers/y",
     "styles"
   ]
-  revision = "v0.2.1"
+  revision = "v0.4.0"
 
 [[projects]]
   branch = "master"
@@ -26,9 +51,15 @@
   revision = "487489b64fb796de2e55f4e8a4ad1e145f80e957"
   version = "v1.1.6"
 
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "d8e400bc7db4870d786864138af681469693d18c"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d000af53c3e4361e32b9cefa257a3a9e965a5b2a08fab400e6b4825e78da5919"
+  inputs-digest = "5c4b057af89d03566fba2045c8432d4c9b1957cc3148828d596d91ce8fa7adc4"
   solver-name = "gps-cdcl"
   solver-version = 1

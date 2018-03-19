@@ -4,4 +4,8 @@
 
 [[constraint]]
   name = "github.com/alecthomas/chroma"
-  revision = "v0.2.1"
+  revision = "v0.4.0"
+
+[[constraint]]
+  name = "golang.org/x/sys"
+  branch = "master"
