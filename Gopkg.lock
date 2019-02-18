@@ -2,6 +2,7 @@
 
 
 [[projects]]
+  digest = "1:44036d48605b5a4c5b86d678257a086a8f65a5855e4dfa0372a9b4d36feb6bb0"
   name = "github.com/alecthomas/chroma"
   packages = [
     ".",
@@ -10,6 +11,7 @@
     "lexers/a",
     "lexers/b",
     "lexers/c",
+    "lexers/circular",
     "lexers/d",
     "lexers/e",
     "lexers/f",
@@ -32,34 +34,47 @@
     "lexers/w",
     "lexers/x",
     "lexers/y",
-    "styles"
+    "styles",
   ]
-  revision = "v0.4.0"
+  pruneopts = "UT"
+  revision = "v0.6.2"
 
 [[projects]]
   branch = "master"
+  digest = "1:710109527a119c813d4fac773712dd92f449ed7c2f7b81f49822f94d290c8f72"
   name = "github.com/danwakefield/fnmatch"
   packages = ["."]
+  pruneopts = "UT"
   revision = "cbb64ac3d964b81592e64f957ad53df015803288"
 
 [[projects]]
+  digest = "1:72dc2b6056e7097f829260e4a2ff08d32fec6017df1982a66e110ab4128486f8"
   name = "github.com/dlclark/regexp2"
   packages = [
     ".",
-    "syntax"
+    "syntax",
   ]
+  pruneopts = "UT"
   revision = "487489b64fb796de2e55f4e8a4ad1e145f80e957"
   version = "v1.1.6"
 
 [[projects]]
   branch = "master"
+  digest = "1:8207c052fb873f83c61a5aa16f6add5feb9881eda2112b56f69fd3b9e7f55c3f"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "d8e400bc7db4870d786864138af681469693d18c"
+  pruneopts = "UT"
+  revision = "d0b11bdaac8adb652bff00e49bcacf992835621a"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5c4b057af89d03566fba2045c8432d4c9b1957cc3148828d596d91ce8fa7adc4"
+  input-imports = [
+    "github.com/alecthomas/chroma",
+    "github.com/alecthomas/chroma/formatters/html",
+    "github.com/alecthomas/chroma/lexers",
+    "github.com/alecthomas/chroma/styles",
+    "golang.org/x/sys/unix",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
