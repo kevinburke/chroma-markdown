@@ -15,7 +15,6 @@ import (
 	"github.com/alecthomas/chroma/formatters/html"
 	"github.com/alecthomas/chroma/lexers"
 	"github.com/alecthomas/chroma/styles"
-	"golang.org/x/sys/unix"
 )
 
 // dataPipedIn returns true if the user piped data via stdin.
@@ -148,7 +147,7 @@ func main() {
 		cmark, lookErr = exec.LookPath("markdown")
 		checkError(lookErr, "finding markdown binary")
 	}
-	execErr := unix.Exec(cmark, []string{cmark, f.Name()}, []string{})
+	execErr := localExec(cmark, []string{cmark, f.Name()}, []string{})
 	checkError(execErr, "executing markdown binary")
 	if err := f.Close(); err != nil {
 		checkError(err, "closing file")
