@@ -2,8 +2,8 @@
 
 package main
 
-import "golang.org/x/sys/windows"
+import "syscall"
 
 func localExec(argv0 string, argv []string, envv []string) error {
-	return windows.Exec(argv0, argv, envv)
+	return syscall.Exec(argv0, argv, envv)
 }
