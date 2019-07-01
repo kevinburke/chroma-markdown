@@ -1,20 +1,14 @@
-MEGACHECK := $(GOPATH)/bin/megacheck
+STATICCHECK := $(GOPATH)/bin/staticcheck
 RELEASE := $(GOPATH)/bin/github-release
 
 UNAME := $(shell uname)
 
-$(MEGACHECK):
-ifeq ($(UNAME), Darwin)
-	curl --silent --location --output $(MEGACHECK) https://github.com/kevinburke/go-tools/releases/download/2018-11-18/megacheck-darwin-amd64
-endif
-ifeq ($(UNAME), Linux)
-	curl --silent --location --output $(MEGACHECK) https://github.com/kevinburke/go-tools/releases/download/2018-11-18/megacheck-linux-amd64
-endif
-	chmod 755 $(MEGACHECK)
+$(STATICCHECK):
+	go get honnef.co/go/tools/cmd/staticcheck
 
-vet: $(MEGACHECK)
+vet: $(STATICCHECK)
 	go list ./... | grep -v vendor | xargs go vet
-	go list ./... | grep -v vendor | xargs $(MEGACHECK)
+	go list ./... | grep -v vendor | xargs $(STATICCHECK)
 
 test: vet
 	go list ./... | grep -v vendor | xargs go test

@@ -145,7 +145,6 @@ func main() {
 	cmark, lookErr := exec.LookPath("cmark")
 	args := []string{cmark, "--unsafe", f.Name()}
 	if lookErr != nil {
-		args = args[:0]
 		cmark, lookErr = exec.LookPath("markdown")
 		checkError(lookErr, "finding markdown binary")
 		args = []string{cmark, f.Name()}
