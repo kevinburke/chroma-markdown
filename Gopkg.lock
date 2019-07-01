@@ -2,7 +2,7 @@
 
 
 [[projects]]
-  digest = "1:44036d48605b5a4c5b86d678257a086a8f65a5855e4dfa0372a9b4d36feb6bb0"
+  digest = "1:edded8bfb3a265c0e051d1d1a4459445a30543c7c46007eb2246c0e89603b2fe"
   name = "github.com/alecthomas/chroma"
   packages = [
     ".",
@@ -37,7 +37,7 @@
     "styles",
   ]
   pruneopts = "UT"
-  revision = "v0.6.2"
+  revision = "v0.6.3"
 
 [[projects]]
   branch = "master"
@@ -60,14 +60,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:0d703f14f9bbbe1070ff0ce86d749dcbc9d68fb0ae554252c09bd4bb37a072e7"
+  digest = "1:730ba27cd66db3b98ec8f51a6f20d45ec277d490cca36b1f54e31d3fcaf4840e"
   name = "golang.org/x/sys"
-  packages = [
-    "unix",
-    "windows",
-  ]
+  packages = ["unix"]
   pruneopts = "UT"
-  revision = "d0b11bdaac8adb652bff00e49bcacf992835621a"
+  revision = "04f50cda93cbb67f2afa353c52f342100e80e625"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -78,7 +75,6 @@
     "github.com/alecthomas/chroma/lexers",
     "github.com/alecthomas/chroma/styles",
     "golang.org/x/sys/unix",
-    "golang.org/x/sys/windows",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
