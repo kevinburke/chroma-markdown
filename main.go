@@ -143,11 +143,14 @@ func main() {
 	// shell out to markdown because of
 	// https://github.com/russross/blackfriday/issues/403
 	cmark, lookErr := exec.LookPath("cmark")
+	args := []string{cmark, "--unsafe", f.Name()}
 	if lookErr != nil {
+		args = args[:0]
 		cmark, lookErr = exec.LookPath("markdown")
 		checkError(lookErr, "finding markdown binary")
+		args = []string{cmark, f.Name()}
 	}
-	execErr := localExec(cmark, []string{cmark, f.Name()}, []string{})
+	execErr := localExec(cmark, args, []string{})
 	checkError(execErr, "executing markdown binary")
 	if err := f.Close(); err != nil {
 		checkError(err, "closing file")
