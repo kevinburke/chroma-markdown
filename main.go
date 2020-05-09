@@ -58,7 +58,7 @@ func highlight(w io.Writer, source, lexer, style string) error {
 	l = chroma.Coalesce(l)
 
 	// Determine formatter.
-	f := html.New(html.WithClasses(), html.TabWidth(4))
+	f := html.New(html.WithClasses(true), html.TabWidth(4))
 
 	// Determine style.
 	s := styles.Get(style)
