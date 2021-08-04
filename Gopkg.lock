@@ -2,7 +2,7 @@
 
 
 [[projects]]
-  digest = "1:d0038638a197fe6bbc26587366f10a35d9545a4e763bc7783cb36b84726f323c"
+  digest = "1:a41877f8e11b1ad96a7d47ba3585e145217679cd9ad2236ad93c5643db15fc48"
   name = "github.com/alecthomas/chroma"
   packages = [
     ".",
@@ -34,10 +34,11 @@
     "lexers/w",
     "lexers/x",
     "lexers/y",
+    "lexers/z",
     "styles",
   ]
   pruneopts = "UT"
-  revision = "v0.7.3"
+  revision = "v0.9.2"
 
 [[projects]]
   branch = "master"
@@ -48,15 +49,14 @@
   revision = "cbb64ac3d964b81592e64f957ad53df015803288"
 
 [[projects]]
-  digest = "1:72dc2b6056e7097f829260e4a2ff08d32fec6017df1982a66e110ab4128486f8"
+  digest = "1:1d760033af7697966e33f900ddd0e68bfa2637b50fa25e7384e45f73f54e3276"
   name = "github.com/dlclark/regexp2"
   packages = [
     ".",
     "syntax",
   ]
   pruneopts = "UT"
-  revision = "487489b64fb796de2e55f4e8a4ad1e145f80e957"
-  version = "v1.1.6"
+  revision = "v1.4.0"
 
 [[projects]]
   branch = "master"

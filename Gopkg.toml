@@ -4,7 +4,11 @@
 
 [[constraint]]
   name = "github.com/alecthomas/chroma"
-  revision = "v0.7.3"
+  revision = "v0.9.2"
+
+[[override]]
+  name = "github.com/dlclark/regexp2"
+  revision = "v1.4.0"
 
 [[constraint]]
   name = "golang.org/x/sys"
