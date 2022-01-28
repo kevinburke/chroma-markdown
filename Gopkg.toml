@@ -4,7 +4,7 @@
 
 [[constraint]]
   name = "github.com/alecthomas/chroma"
-  revision = "v0.9.2"
+  revision = "v0.9.4"
 
 [[override]]
   name = "github.com/dlclark/regexp2"
