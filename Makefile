@@ -3,15 +3,14 @@ RELEASE := $(GOPATH)/bin/github-release
 
 UNAME := $(shell uname)
 
-$(STATICCHECK):
-	go get honnef.co/go/tools/cmd/staticcheck
 
-vet: $(STATICCHECK)
-	go list ./... | grep -v vendor | xargs go vet
-	go list ./... | grep -v vendor | xargs $(STATICCHECK)
+vet:
+	go vet ./...
+	go install honnef.co/go/tools/cmd/staticcheck@latest
+	staticcheck ./...
 
 test: vet
-	go list ./... | grep -v vendor | xargs go test
+	go test ./...
 
 $(RELEASE): test
 	go get -u github.com/aktau/github-release
