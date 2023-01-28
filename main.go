@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -131,7 +130,7 @@ func main() {
 		}
 	}
 	checkError(bs.Err(), "reading markdown file")
-	f, err := ioutil.TempFile("", "chroma-markdown-")
+	f, err := os.CreateTemp("", "chroma-markdown-")
 	checkError(err, "creating temporary file")
 	w := bufio.NewWriter(f)
 	if needCSS && *css != "" {
