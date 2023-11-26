@@ -13,7 +13,7 @@ test: vet
 	go test ./...
 
 $(RELEASE): test
-	go get -u github.com/aktau/github-release
+	go install github.com/aktau/github-release@latest
 
 release: $(RELEASE)
 ifndef version
