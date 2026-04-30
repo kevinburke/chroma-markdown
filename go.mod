@@ -3,7 +3,7 @@ module github.com/kevinburke/chroma-markdown
 go 1.25.0
 
 require (
-	github.com/alecthomas/chroma/v2 v2.24.0
+	github.com/alecthomas/chroma/v2 v2.24.1
 	golang.org/x/sys v0.43.0
 )
 
