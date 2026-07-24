@@ -8,7 +8,7 @@ jobs:
       uses: actions/setup-go@v7.0.0
       with:
         go-version: 1.25.x
-    - uses: actions/checkout@v7.0.0
+    - uses: actions/checkout@v7.0.1
       with:
          path: './src/github.com/kevinburke/chroma-markdown'
     # staticcheck needs this for GOPATH
