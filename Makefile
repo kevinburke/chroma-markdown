@@ -36,6 +36,8 @@ release: test
 	if [ -z "$$GITHUB_TOKEN" ]; then \
 		echo "GITHUB_TOKEN is unset and ~/cfg/github-token is empty or missing" >&2; exit 1; \
 	fi; \
+	gh api user --jq .login >/dev/null || \
+		{ echo "GITHUB_TOKEN was rejected by GitHub; refusing to bump and push" >&2; exit 1; }; \
 	if [ -n "$$(git status --porcelain)" ]; then \
 		echo "working tree is dirty; commit or stash first" >&2; exit 1; \
 	fi; \
