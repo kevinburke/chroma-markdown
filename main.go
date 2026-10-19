@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -74,6 +75,24 @@ func highlight(w io.Writer, source, lexer, style string) error {
 
 const Version = "0.0"
 
+// openInput picks the markdown source. An explicit file argument always wins:
+// stdin is only read when no argument is given (or the argument is "-"), since
+// under make/cron/CI stdin is often an inherited pipe that is never closed.
+func openInput(args []string, stdin *os.File) (io.ReadCloser, error) {
+	switch {
+	case len(args) == 1 && args[0] != "-":
+		return os.Open(args[0])
+	case len(args) == 0 && dataPipedIn():
+		return io.NopCloser(stdin), nil
+	case len(args) == 1:
+		return io.NopCloser(stdin), nil
+	default:
+		return nil, errUsage
+	}
+}
+
+var errUsage = errors.New("expected exactly one markdown file (or \"-\" for stdin)")
+
 func main() {
 	css := flag.String("css", "", "Path to a CSS import to include at the beginning of the output")
 	style := flag.String("style", "native", "CSS style to use")
@@ -82,25 +101,22 @@ func main() {
 	flag.Parse()
 	if *version || *v {
 		fmt.Printf("chroma-markdown version %s\n", Version)
-		os.Exit(2)
+		return
 	}
-	var r io.Reader
-	if dataPipedIn() {
-		r = os.Stdin
-	} else {
-		if flag.NArg() != 1 {
+	in, err := openInput(flag.Args(), os.Stdin)
+	if err != nil {
+		if err == errUsage {
+			fmt.Fprintf(os.Stderr, "chroma-markdown: %v\n", err)
 			flag.Usage()
+			os.Exit(2)
 		}
-		file := flag.Arg(0)
-		f, err := os.Open(file)
 		checkError(err, "opening file")
-		defer f.Close()
-		r = bufio.NewReader(f)
 	}
+	defer in.Close()
 	out := new(bytes.Buffer)
 	currentCodeBlock := new(bytes.Buffer)
 	started := false
-	bs := bufio.NewScanner(r)
+	bs := bufio.NewScanner(in)
 	lang := ""
 	needCSS := false
 	for bs.Scan() {
@@ -130,27 +146,30 @@ func main() {
 		}
 	}
 	checkError(bs.Err(), "reading markdown file")
-	f, err := os.CreateTemp("", "chroma-markdown-")
-	checkError(err, "creating temporary file")
-	w := bufio.NewWriter(f)
+	if started {
+		fmt.Fprintln(os.Stderr, "chroma-markdown: warning: unterminated code block")
+	}
+
+	input := new(bytes.Buffer)
 	if needCSS && *css != "" {
-		_, writeErr := fmt.Fprintf(w, `<link rel="stylesheet" type="text/css" href="%s" />\n`, *css)
-		checkError(writeErr, "writing data to temporary file")
+		fmt.Fprintf(input, "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", *css)
 	}
-	_, writeErr := f.Write(out.Bytes())
-	checkError(writeErr, "writing data to temporary file")
-	// shell out to markdown because of
-	// https://github.com/russross/blackfriday/issues/403
-	cmark, lookErr := exec.LookPath("cmark")
-	args := []string{cmark, "--unsafe", f.Name()}
+	input.Write(out.Bytes())
+
+	// Shell out to markdown because of
+	// https://github.com/russross/blackfriday/issues/403. The input goes over
+	// the child's stdin (no temp file to leak) and the child inherits our
+	// environment, so PATH/LANG etc. are preserved.
+	bin, args := "cmark", []string{"--unsafe"}
+	cmark, lookErr := exec.LookPath(bin)
 	if lookErr != nil {
-		cmark, lookErr = exec.LookPath("markdown")
+		bin, args = "markdown", nil
+		cmark, lookErr = exec.LookPath(bin)
 		checkError(lookErr, "finding markdown binary")
-		args = []string{cmark, f.Name()}
 	}
-	execErr := localExec(cmark, args, []string{})
-	checkError(execErr, "executing markdown binary")
-	if err := f.Close(); err != nil {
-		checkError(err, "closing file")
-	}
+	cmd := exec.Command(cmark, args...)
+	cmd.Stdin = input
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	checkError(cmd.Run(), "running "+bin)
 }
