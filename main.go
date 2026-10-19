@@ -73,8 +73,6 @@ func highlight(w io.Writer, source, lexer, style string) error {
 	return f.Format(w, s, it)
 }
 
-const Version = "0.0"
-
 // openInput picks the markdown source. An explicit file argument always wins:
 // stdin is only read when no argument is given (or the argument is "-"), since
 // under make/cron/CI stdin is often an inherited pipe that is never closed.
